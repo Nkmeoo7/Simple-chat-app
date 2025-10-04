@@ -1,7 +1,14 @@
 import { WebSocketServer, WebSocket } from "ws";
+import http from 'http';
 
-const wss = new WebSocketServer({ port: 8080 });
+const server = http.createServer();
+const wss = new WebSocketServer({ server })
+const port = process.env.PORT || 8080;
 
+server.listen(port, () => {
+  console.log(`WebSocket server started at port ${port}`);
+
+})
 const rooms = new Map<string, Set<WebSocket>>();
 
 wss.on("connection", (socket) => {
