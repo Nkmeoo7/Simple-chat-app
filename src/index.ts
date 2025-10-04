@@ -1,7 +1,11 @@
 import { WebSocketServer, WebSocket } from "ws";
 import http from 'http';
 
-const server = http.createServer();
+const server = http.createServer((req, res) => {
+  // This part handles the health check
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Server is running');
+});
 const wss = new WebSocketServer({ server })
 const port = process.env.PORT || 8080;
 
